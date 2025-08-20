@@ -12,7 +12,7 @@ a transfer-learned ResNet (pretrained on ImageNet, frozen backbone + new head).
 
 This repo includes standardized preprocessing/augmentations, training with early stopping and LR scheduling, rich evaluation (accuracy, precision, recall, F1), confusion matrices, error analysis, performance benchmarking (training time, memory, inference speed), deployment, and tidy experiments logging.
 
-##Features
+## Features:
 
 CIFAR-10 preprocessing & augmentations (random crop, flip, normalization)
 
