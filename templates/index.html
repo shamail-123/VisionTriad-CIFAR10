@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Predictions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #2c3e50;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .image-card {
+            text-align: center;
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 120px;
+        }
+
+        .image-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 3px solid transparent;
+            transition: transform 0.2s ease;
+        }
+
+        .image-card img.correct {
+            border-color: #27ae60;
+        }
+
+        .image-card img.incorrect {
+            border-color: #e74c3c;
+        }
+
+        .image-card img:hover {
+            transform: scale(1.05);
+        }
+
+        .image-card p {
+            margin: 8px 0 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose Model for CIFAR-10 Classification</h1>
+    <form method="post">
+        <select name="model_name">
+            <option value="resnet" {% if model_name == 'resnet' %}selected{% endif %}>ResNet</option>
+            <option value="cnn_mlp" {% if model_name == 'cnn_mlp' %}selected{% endif %}>CNN + MLP</option>
+            <option value="vit" {% if model_name == 'vit' %}selected{% endif %}>Vision Transformer</option>
+        </select>
+        <input type="submit" value="Run Classification">
+    </form>
+
+    <h2>Predictions:</h2>
+    <div class="gallery">
+        {% for item in results %}
+        {% set img = item[0] %}
+        {% set pred = item[1] %}
+        {% set true_label = item[2] %}
+        {% set correct = item[3] %}
+        <div class="image-card">
+            <img src="{{ url_for('static', filename='images/' + img) }}"
+                 class="{{ 'correct' if correct else 'incorrect' }}">
+            <p><strong>Pred:</strong> {{ pred }}<br><strong>True:</strong> {{ true_label }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
